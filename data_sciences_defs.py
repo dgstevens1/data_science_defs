@@ -19,6 +19,22 @@ def pearson_r(x, y):
     # Return entry [0,1]
     return corr_mat[0,1]
 
+def bootstrap_replicate_1d(data,func):
+    '''Generate bootstrap replicate of 1d data.'''
+    bs_sample = np.random.choice(data, len(data))
+    return func(bs_sample)
+
+def draw_bs_reps(data, func, size=1):
+    """Draw bootstrap replicates."""
+
+    # Initialize array of replicates: bs_replicates
+    bs_replicates = np.empty(size)
+
+    # Generate replicates
+    for i in range(size):
+        bs_replicates[i] = bootstrap_replicate_1d(data,func)
+
+    return bs_replicates
 
 def perform_bernoulli_trials(n, p):
     """Perform n Bernoulli trials with success probability p
@@ -48,3 +64,17 @@ def successive_poisson(tau1, tau2, size=1):
 
     return t1 + t2
 
+def permutation_sample(data1, data2):
+    """Generate a permutation sample from two data sets."""
+
+    # Concatenate the data sets: data
+    data = np.concatenate((data1,data2))
+
+    # Permute the concatenated array: permuted_data
+    permuted_data = np.random.permutation(data)
+
+    # Split the permuted array into two: perm_sample_1, perm_sample_2
+    perm_sample_1 = permuted_data[:len(data1)]
+    perm_sample_2 = permuted_data[len(data1):]
+
+    return perm_sample_1, perm_sample_2
