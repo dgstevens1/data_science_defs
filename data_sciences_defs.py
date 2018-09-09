@@ -1,3 +1,5 @@
+import numpy as np
+
 def ecdf(data):
     """Compute ECDF for a one-dimensional array of measurements."""
     # Number of data points: n
@@ -121,13 +123,9 @@ def draw_bs_pairs_linreg(x, y, size=1):
 
 def draw_bs_pairs(x, y, func, size=1):
     """Perform pairs bootstrap for linear regression."""
-
+    bs_replicates = []
     # Set up array of indices to sample from: inds
     inds = np.arange(len(x))
-
-    # Initialize replicates
-    bs_slope_reps = np.empty(size)
-    bs_intercept_reps = np.empty(size)
 
     # Generate replicates
     for i in range(size):
